@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: agnos-api
+  namespace: agnos
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: agnos-api

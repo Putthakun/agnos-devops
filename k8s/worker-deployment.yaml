@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agnos-worker
+  namespace: agnos
+  labels:
+    app: agnos-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agnos-worker
+  strategy:
+    type: Recreate   # only one worker runs at a time to avoid duplicate jobs
+  template:
+    metadata:
+      labels:
+        app: agnos-worker
+    spec:
+      terminationGracePeriodSeconds: 60   # give the in-flight job time to finish
+      containers:
+        - name: worker
+          image: ghcr.io/putthakun/agnos-devops/worker:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: agnos-config-prod   # swap per environment
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "32Mi"
+            limits:
+              cpu: "200m"
+              memory: "64Mi"
+          livenessProbe:
+            exec:
+              command: ["sh", "-c", "kill -0 1"]
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop: ["ALL"]

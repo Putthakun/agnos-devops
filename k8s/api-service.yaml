@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: agnos-api
+  namespace: agnos
+  labels:
+    app: agnos-api
+spec:
+  selector:
+    app: agnos-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

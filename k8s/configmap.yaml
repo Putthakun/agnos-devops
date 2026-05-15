@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agnos-config-dev
+  namespace: agnos
+data:
+  APP_ENV: "dev"
+  PORT: "8080"
+  WORKER_INTERVAL_SECONDS: "30"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agnos-config-uat
+  namespace: agnos
+data:
+  APP_ENV: "uat"
+  PORT: "8080"
+  WORKER_INTERVAL_SECONDS: "60"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agnos-config-prod
+  namespace: agnos
+data:
+  APP_ENV: "prod"
+  PORT: "8080"
+  WORKER_INTERVAL_SECONDS: "300"
