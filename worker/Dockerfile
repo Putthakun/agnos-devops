@@ -10,7 +10,9 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /worker .
 
 # ── Stage 2: Runtime ──────────────────────────────────────────────────────────
-FROM gcr.io/distroless/static-nonroot:nonroot
+FROM alpine:3.21
+
+RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
 
 COPY --from=builder /worker /worker
 
