@@ -1,0 +1,29 @@
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: agnos-api:local
+    env_file:
+      - ./envs/.env.dev
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    image: agnos-worker:local
+    env_file:
+      - ./envs/.env.dev
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_healthy

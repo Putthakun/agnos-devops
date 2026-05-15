@@ -24,8 +24,10 @@ profile.cov
 go.work
 go.work.sum
 
-# env file
+# env files (use envs/.env.* committed as templates — never commit secrets)
 .env
+*.env.local
+*.env.secret
 
 # Editor/IDE
 # .idea/
