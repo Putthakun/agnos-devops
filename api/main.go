@@ -52,6 +52,7 @@ func healthHandler(c *gin.Context) {
 		"service":   "api",
 		"env":       env,
 		"timestamp": time.Now().UTC().Format(time.RFC3339),
+		"version":   "1.0.0",
 	})
 }
 
