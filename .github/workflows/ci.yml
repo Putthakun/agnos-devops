@@ -26,6 +26,10 @@ jobs:
           go-version-file: ${{ matrix.service }}/go.mod
           cache-dependency-path: ${{ matrix.service }}/go.sum
 
+      - name: go mod tidy
+        working-directory: ${{ matrix.service }}
+        run: go mod tidy
+
       - name: go vet
         working-directory: ${{ matrix.service }}
         run: go vet ./...
