@@ -1,6 +1,6 @@
 module github.com/putthakun/agnos-devops/api
 
-go 1.24
+go 1.25
 
 require (
 	github.com/bytedance/gopkg v0.1.4 // indirect
