@@ -26,6 +26,10 @@ jobs:
           go-version-file: ${{ matrix.service }}/go.mod
           cache-dependency-path: ${{ matrix.service }}/go.sum
 
+      - name: Download dependencies
+        working-directory: ${{ matrix.service }}
+        run: go mod download
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
